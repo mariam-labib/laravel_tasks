@@ -1,20 +1,18 @@
 <?php
-namespace App\Http\Controllers;
 
-use App\Models\Product;
-use Illuminate\Http\Request;
+namespace App\Models;
 
-class ProductController extends Controller
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Product extends Model
 {
-    public function index()
-    {
-        $products = Product::with('category')->get();
-        return view('products.index', compact('products'));
-    }
+    use HasFactory;
 
-    public function show($id)
+    protected $fillable = ['name', 'price', 'category_id'];
+
+    public function category()
     {
-        $product = Product::with('category')->findOrFail($id);
-        return view('products.show', compact('product'));
+        return $this->belongsTo(Category::class);
     }
 }

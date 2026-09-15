@@ -1,27 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
     <title>Categories List</title>
-    <style>
-        body { font-family: Tahoma, sans-serif; direction: ltr; text-align: left; padding: 40px; background-color: #f4f4f9; }
-        h1 { color: #333; margin-bottom: 20px; }
-        ul { background: #fff; padding: 20px 30px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); width: 350px; list-style-type: none; }
-        li { padding: 10px 0; border-bottom: 1px solid #eee; font-size: 16px; color: #555; }
-        li:last-child { border-bottom: none; }
-    </style>
 </head>
 <body>
-
+    <a href="{{ route('categories.create') }}">+ Add New Category</a>
+    <hr>
     <h1>Categories List</h1>
 
     <ul>
-        @forelse($categories as $category)
-            <li>{{ $category->name }}</li>
-        @empty
-            <li>No categories found.</li>
-        @endforelse
+        @foreach($categories as $category)
+            <li style="margin-bottom: 10px;">
+                <strong>{{ $category->name }}</strong>
+                | <a href="{{ route('categories.edit', $category->id) }}">Edit</a>
+                | <form action="{{ route('categories.destroy', $category->id) }}" method="POST" style="display:inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" onclick="return confirm('Delete this category?')">Delete</button>
+                </form>
+            </li>
+        @endforeach
     </ul>
 
+    <br>
+    <a href="{{ route('products.index') }}">← Go to Products List</a>
 </body>
 </html>
