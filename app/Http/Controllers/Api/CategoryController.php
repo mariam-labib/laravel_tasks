@@ -10,7 +10,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        return "Hello Mariam, Categories API is working!";
+        return response()->json(Category::all());
     }
     public function store(Request $request)
     {
